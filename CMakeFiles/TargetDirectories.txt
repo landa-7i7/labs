@@ -1,0 +1,3 @@
+C:/Users/777/Desktop/CMakeFiles/example.dir
+C:/Users/777/Desktop/CMakeFiles/edit_cache.dir
+C:/Users/777/Desktop/CMakeFiles/rebuild_cache.dir
