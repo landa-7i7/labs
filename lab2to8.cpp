@@ -9,7 +9,38 @@
 #include <string>
 using namespace std;
 
-vector<long long> mergesort(vector<long long>& a);
+vector<long long> mergesort(vector<long long>& a) {
+    long long ln = a.size();
+    if (ln <= 1) {
+        return a;
+    }
+    
+    if (set<long long>(a.begin(), a.end()).size() == 1) {
+        return a;
+    }
+    
+    double avg_a = accumulate(a.begin(), a.end(), 0.0) / ln;
+    vector<long long> l, r;
+
+    for (long long x : a) {
+        if (x < avg_a) {
+            l.push_back(x);
+        } else {
+            r.push_back(x);
+        }
+    }
+
+    // Recursively sort the left and right halves
+    l = mergesort(l);
+    r = mergesort(r);
+
+    vector<long long> result;
+    result.reserve(ln);
+    result.insert(result.end(), l.begin(), l.end());
+    result.insert(result.end(), r.begin(), r.end());
+
+    return result;
+}
 
 bool isPrime(int num) {
     if (num <= 1) return false;
@@ -26,7 +57,6 @@ int getFirstDigit(int number) {
     return number;
 }
 
-// Функция для вычисления суммы цифр числа
 int getDigitSum(int number) {
     int sum = 0;
     while (number > 0) {
@@ -175,28 +205,26 @@ int main()
     // long long N; // количество чисел в последовательности
     // cin >> N;
 
-    // vector<long long> A(N); // создаем вектор размером i
+    // vector<long long> A(N);
     // for(long long x = 1; x <= N; x++) {
-    //     A[x-1] = x; // корректно присваиваем значение x элементу A[x]
+    //     A[x-1] = x;
     // }
 
     // long long product = 1;    // произведение
     // bool found = false;       // флаг, чтобы проверить, найдены ли числа
-    // int minNumber = numeric_limits<int>::max(); // наименьшее число
+    // int minNumber = INT_MAX; // наименьшее число
     // int minIndex = -1;       // индекс наименьшего числа
 
     // for (int i = 0; i < N; ++i) {
     //     int lastDigit = A[i] % 10; // последняя цифра числа
     //     if (lastDigit == 2 || lastDigit == 4) {
-    //         // Умножаем на число
     //         product *= A[i];
     //         cout << product << ' ';
     //         found = true;
 
-    //         // Проверяем наименьшее число
     //         if (A[i] < minNumber) {
     //             minNumber = A[i];
-    //             minIndex = i + 1; // индекс + 1, чтобы сделать его 1-ориентированным
+    //             minIndex = i;
     //         }
     //     }
     // }
@@ -235,7 +263,7 @@ int main()
 
     // for(int i=0; i<10; i++) cout << A[i] << ' '; // a[0,9]
     // cout << endl;
-    // for(int i=0; i<10; i++) cout << A[A.size()-i] << ' '; // a[-10,-1]
+    // for(int i=0; i<10; i++) cout << A[A.size()-i-1] << ' '; // a[-10,-1]
     // cout << endl;
 
     // for (int x : A) {
@@ -265,19 +293,16 @@ int main()
     //     cin >> numbers[i];
     // }
 
-    // // Создаем вектор с свойствами чисел для сортировки
     // vector<NumberProperties> properties;
     // for (int num : numbers) {
     //     properties.emplace_back(num);
     // }
 
-    // // Сортируем вектор properties
     // sort(properties.begin(), properties.end(), compare);
 
-    // // Выводим отсортированные числа
     // cout << "Отсортированные числа:" << endl;
-    // for (const auto &prop : properties) {
-    //     cout << prop.number << " ";
+    // for (const auto &str : properties) {
+    //     cout << str.number << ' ';
     // }
     // cout << endl;
 
@@ -308,7 +333,6 @@ int main()
     // }
 
     // int closestRow = -1; // Индекс строки с суммой, ближайшей к 0
-    // int closestSum = 0; // Сумма ближайшей строки к 0
     // int minDistance = INT_MAX; // Минимальное расстояние от 0
 
     // // Поиск строки с суммой, ближайшей к 0
@@ -324,7 +348,6 @@ int main()
     //     // Сравниваем с минимальным расстоянием
     //     if (distance < minDistance) {
     //         minDistance = distance;
-    //         closestSum = sum;
     //         closestRow = i; // Сохраняем индекс строки
     //     }
     // }
@@ -345,75 +368,39 @@ int main()
     // }
 
     //lab 6.3
-    int j;
-    cin >> j;
-    vector<int> A(j);
-    for(int i=0;i<j;i++){
-        cin >> A[i];
-    }
+    // int j;
+    // cin >> j;
+    // vector<int> A(j);
+    // for(int i=0;i<j;i++){
+    //     cin >> A[i];
+    // }
 
-    vector<int> B;
-    for(int x : A)
-    {
-        int x64 = x;
-        bool flag6 = 0;
-        bool flag7 = 0;
-        while (x >= 1)
-        {
-            int y = x%10;
-            x /= 10;
-            if(y == 7) flag7 = 1;
-            if(y == 6) flag6 = 1;
+    // vector<int> B;
+    // for(int x : A)
+    // {
+    //     int x64 = x;
+    //     bool flag6 = 0;
+    //     bool flag7 = 0;
+    //     while (x >= 1)
+    //     {
+    //         int y = x%10;
+    //         x /= 10;
+    //         if(y == 7) flag7 = 1;
+    //         if(y == 6) flag6 = 1;
 
-        }
+    //     }
 
-        if (!(flag7 && !flag6))
-        {
-            B.push_back(x64);
-            if (isPrime(x64)) B.push_back(x64);
-        }
-    }
+    //     if (!(flag7 && !flag6))
+    //     {
+    //         B.push_back(x64);
+    //         if (isPrime(x64)) B.push_back(x64);
+    //     }
+    // }
 
-    for(int i=0;i<j;i++){
-        cout << B[i];
-    }
+    // for(int i=0;i<j;i++){
+    //     cout << B[i];
+    // }
 
 
     return 0;
-}
-
-vector<long long> mergesort(vector<long long>& a) {
-    long long ln = a.size();
-    if (ln <= 1) {
-        return a; // Return the array itself if size is <= 1
-    }
-    
-    // If all elements are the same
-    if (set<long long>(a.begin(), a.end()).size() == 1) {
-        return a;
-    }
-    
-    // Calculate the average
-    double avg_a = accumulate(a.begin(), a.end(), 0.0) / ln;
-    vector<long long> l, r;
-
-    for (long long x : a) {
-        if (x < avg_a) {
-            l.push_back(x);
-        } else {
-            r.push_back(x);
-        }
-    }
-
-    // Recursively sort the left and right halves
-    l = mergesort(l);
-    r = mergesort(r);
-
-    // Merge the left and right sorted halves
-    vector<long long> result;
-    result.reserve(ln);
-    result.insert(result.end(), l.begin(), l.end());
-    result.insert(result.end(), r.begin(), r.end());
-
-    return result;
 }
