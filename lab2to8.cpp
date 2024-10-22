@@ -367,39 +367,37 @@ int main()
     //     cout << endl;
     // }
 
-    //lab 6.3
-    // int j;
-    // cin >> j;
-    // vector<int> A(j);
-    // for(int i=0;i<j;i++){
-    //     cin >> A[i];
-    // }
+    //lab 6.4
+    int j = 5;
+    vector<int> A = {2,767,77,777,3};
 
-    // vector<int> B;
-    // for(int x : A)
-    // {
-    //     int x64 = x;
-    //     bool flag6 = 0;
-    //     bool flag7 = 0;
-    //     while (x >= 1)
-    //     {
-    //         int y = x%10;
-    //         x /= 10;
-    //         if(y == 7) flag7 = 1;
-    //         if(y == 6) flag6 = 1;
+    for(int i=0;i<j;i++) cout << A[i] << ' ';
+    cout << endl;
 
-    //     }
+    int Δ = 0;
+    for(int x=0; x<j; ++x)
+    {
+        int x64 = A[x];
+        bool has6=0, has7=0;
+        while (x64 >= 1)
+        {
+            int y = x64%10;
+            x64 /= 10;
+            if(y == 7) has7 = 1;
+            if(y == 6) has6 = 1;
+        }
 
-    //     if (!(flag7 && !flag6))
-    //     {
-    //         B.push_back(x64);
-    //         if (isPrime(x64)) B.push_back(x64);
-    //     }
-    // }
+        if (has7 && !has6) ++Δ; 
+        else 
+        {
+            A[x-Δ] = A[x];
+            if (isPrime(A[x])) { A.insert(A.begin()+x, A[x]); ++j; ++x; A[x-Δ] = A[x]; }
+        }
+    }
+    j -= Δ;
+    A.resize(j);
 
-    // for(int i=0;i<j;i++){
-    //     cout << B[i];
-    // }
+    for(int i=0;i<j;i++) cout << A[i] << ' ';
 
 
     return 0;
